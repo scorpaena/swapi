@@ -204,6 +204,13 @@ class CSVFileProcessor:
             for item in csv_reader:
                 yield item
 
+    # def to_response(self, id):
+    #     row = self.read_from_csv_file(id)
+    #     lists=[]
+    #     for i in range(10):
+    #         lists.append(row)
+    #     return lists
+
 
 def csv_file_name():
     now = datetime.now().strftime("%m-%d-%y %H:%M:%S")

@@ -7,17 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='StarWarsFilesModel',
+            name="StarWarsFilesModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file_name', models.CharField(max_length=250)),
-                ('url', models.URLField(default='https://swapi.dev/api/people/', max_length=250)),
-                ('date', models.DateField(auto_now_add=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("file_name", models.CharField(max_length=250)),
+                (
+                    "url",
+                    models.URLField(
+                        default="https://swapi.dev/api/people/", max_length=250
+                    ),
+                ),
+                ("date", models.DateField(auto_now_add=True)),
             ],
         ),
     ]

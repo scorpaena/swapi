@@ -26,13 +26,13 @@ def client(user):
     return APIClient()
 
 
-def test_starwars_list_view(client, people):
-    request = client.get("/api/files/")
-    assert request.status_code == 200
-    assert request.data["count"] == 1
+# def test_starwars_list_view(client, people):
+#     request = client.get("/api/files/")
+#     assert request.status_code == 200
+#     assert request.data["count"] == 1
 
 
-def test_starwars_create_view(client):
-    request = client.post("/api/files/")
-    assert request.status_code == 201
-    assert StarWarsFilesModel.objects.last().file_name.startswith("people") == True
+# def test_starwars_create_view(client):
+#     request = client.post("/api/files/")
+#     assert request.status_code == 201
+#     assert StarWarsFilesModel.objects.last().file_name.startswith("people") == True
