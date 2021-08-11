@@ -5,14 +5,20 @@ from data_parser.models import StarWarsFilesModel
 from data_parser.services import (
     StarWarsAPIClient,
     StarWarsAPIDataProcessor,
-    CSVFileProcessor,
+    StarWarsCSVFileProcessor,
+    StarWarsModelProccessor,
     csv_file_name,
 )
 
 
 @pytest.fixture
 def csv():
-    return CSVFileProcessor()
+    return StarWarsCSVFileProcessor()
+
+
+@pytest.fixture
+def model_processor():
+    return StarWarsModelProccessor()
 
 
 @pytest.fixture
@@ -120,8 +126,8 @@ def test_transform_to_csv(csv, file_name):
     assert file_not_empty != 0
 
 
-def test_get_file_name(object, id, csv):
-    file_name = csv._get_file_name(id)
+def test_get_file_name(object, id, model_processor):
+    file_name = model_processor._get_file_name(id)
     assert file_name == "foo"
 
 

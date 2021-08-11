@@ -145,9 +145,22 @@ class StarWarsAPIDataProcessor:
             yield result_dict
 
 
-class CSVFileProcessor:
+class StarWarsModelProccessor:
+    def __init__(self):
+        self.model = StarWarsFilesModel
+
+    def _get_file_name(self, id):
+        try:
+            object = self.model.objects.get(id=id)
+        except ObjectDoesNotExist as error:
+            raise error
+        return object.file_name
+
+
+class StarWarsCSVFileProcessor:
     def __init__(self):
         self.data_processor = StarWarsAPIDataProcessor()
+        self.model_processor = StarWarsModelProccessor()
         self.file_folder_path = "data_parser/csv_files/"
         self.csv_columns = [
             "name",
@@ -168,21 +181,6 @@ class CSVFileProcessor:
             "url",
         ]
 
-    def _get_file_name(self, id):
-        try:
-            object = StarWarsFilesModel.objects.get(id=id)
-        except ObjectDoesNotExist as error:
-            raise error
-        return object.file_name
-
-    def _get_file_path(self, id):
-        file_name = self._get_file_name(id)
-        path = f"{self.file_folder_path}{file_name}"
-        is_file = os.path.isfile(path)
-        if not is_file:
-            raise FileNotFoundError(f"{file_name} is not found")
-        return path
-
     def create_csv_file(self, file_name):
         data_to_save = self.data_processor.people_all_data_set()
         with open(f"data_parser/csv_files/{file_name}", "w") as csv_file:
@@ -190,6 +188,14 @@ class CSVFileProcessor:
             csv_writer.writeheader()
             for item in data_to_save:
                 csv_writer.writerow(item)
+
+    def _get_file_path(self, id):
+        file_name = self.model_processor._get_file_name(id)
+        path = f"{self.file_folder_path}{file_name}"
+        is_file = os.path.isfile(path)
+        if not is_file:
+            raise FileNotFoundError(f"{file_name} is not found")
+        return path
 
     def read_from_csv_file(self, id):
         path = self._get_file_path(id)

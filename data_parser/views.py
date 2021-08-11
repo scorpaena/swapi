@@ -1,9 +1,9 @@
 from rest_framework import generics
 from rest_framework.views import APIView
-from .pagination import CSVFilePagination
+from .pagination import StarWarsCSVFilePagination
 from .serializers import StarWarsFilesSerializer
 from .models import StarWarsFilesModel
-from .services import CSVFileProcessor
+from .services import StarWarsCSVFileProcessor
 
 
 class StarWarsFileListCreateView(generics.ListCreateAPIView):
@@ -14,6 +14,6 @@ class StarWarsFileListCreateView(generics.ListCreateAPIView):
 class StarWarsCSVFileView(APIView):
     def get(self, request, *args, **kwargs):
         id = kwargs.get("pk")
-        paginator = CSVFilePagination()
+        paginator = StarWarsCSVFilePagination()
         response = paginator.get_paginated_response(request, id)
         return response

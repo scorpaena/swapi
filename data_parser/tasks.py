@@ -1,5 +1,5 @@
 from swapi.celery import app
-from .services import CSVFileProcessor
+from .services import StarWarsCSVFileProcessor
 
 
 @app.task
