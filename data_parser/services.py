@@ -191,25 +191,12 @@ class CSVFileProcessor:
             for item in data_to_save:
                 csv_writer.writerow(item)
 
-    def get_file_length(self, id):
-        path = self._get_file_path(id)
-        with open(path) as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            return sum(1 for row in csv_reader)
-
     def read_from_csv_file(self, id):
         path = self._get_file_path(id)
         with open(path) as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for item in csv_reader:
                 yield item
-
-    # def to_response(self, id):
-    #     row = self.read_from_csv_file(id)
-    #     lists=[]
-    #     for i in range(10):
-    #         lists.append(row)
-    #     return lists
 
 
 def csv_file_name():

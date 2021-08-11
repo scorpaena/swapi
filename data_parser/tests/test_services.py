@@ -1,6 +1,7 @@
 import pytest
 import os
 from pathlib import Path
+from data_parser.models import StarWarsFilesModel
 from data_parser.services import (
     StarWarsAPIClient,
     StarWarsAPIDataProcessor,
@@ -59,6 +60,11 @@ def id_list():
     return ["1", "2", "3"]
 
 
+@pytest.fixture
+def object(db):
+    return StarWarsFilesModel.objects.create(file_name="foo")
+
+
 def test_csv_file_name():
     file_name = csv_file_name()
     assert file_name.startswith("people") == True
@@ -112,3 +118,18 @@ def test_transform_to_csv(csv, file_name):
     file_not_empty = os.stat(file).st_size
     assert file.is_file() == True
     assert file_not_empty != 0
+
+
+def test_get_file_name(object, id, csv):
+    file_name = csv._get_file_name(id)
+    assert file_name == "foo"
+
+
+def test_get_file_path(object, id, csv):
+    path = csv._get_file_path(id)
+    assert path == "data_parser/csv_files/foo"
+
+
+def test_read_from_csv_file(object, id, csv):
+    generator = csv.read_from_csv_file(id)
+    assert str(type(generator)) == "<class 'generator'>"
